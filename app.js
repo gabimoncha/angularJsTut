@@ -1,23 +1,6 @@
 var app = angular.module('store', []);
 
 
-/*  Tema: Sa se imparta pagina in doua zone
-    In stanga sa apara o lista (ul > li) doar cu numele candidatilor
-    iar atunci cand se da click pe unul din ei, in zona din
-    dreapta sa se afiseze cv-ul intreg.
-    Totodata in partea de sus a aplicatiei sa se puna un buton
-    de add cv care la apasare, sa afiseze in zona din dreapta 
-    a aplicatiei formularul de adaugare in locul cv-ului candidatului
-    selectat.
-    Dupa salvare, formularul trebuie sa dispara iar in locul
-    lui sa se afiseze cv-ul formatat prin interpolari.
-    Pentru a diferentia in lista din stanga cadidatul selectat
-    trebuie sa fie decorat cu o clasa
-    care sa indice ca acesta este cel selectat. (Indiciu: ng-class)
-    Formularul de adaugare nu trebuie apara decat dupa apasarea butonului
-    add cv si sa dispara dupa salvare sau selectarea unui candidat.
-    */
-
 app.controller('cvListCtrl', function ($scope) {
     $scope.cvList = cVs;
     $scope.expandOrNot = false;
