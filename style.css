@@ -1,0 +1,25 @@
+.container1 {
+    width: 19%;
+    height: 100vh;
+    overflow: scroll;
+    background: #aaa;
+    float: left;
+}
+
+.container2 {
+    width: 38%;
+    float: left;
+}
+.container3 {
+    width: 38%;
+    float: left;
+    margin: 10px
+}
+
+.selected {
+    background-color: coral
+}
+
+input.ng-invalid-required {
+     background:  #7892AA;   
+    }

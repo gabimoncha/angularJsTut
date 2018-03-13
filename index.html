@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html ng-app="store">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.0/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.0/dist/semantic.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+</head>
+
+<body>
+
+
+  <div ng-controller="cvListCtrl">
+
+    <div class="container1">
+      <h1>CV List</h1>
+      Candidates
+      <div ng-repeat="cv in cvList track by $index" ng-click="itemClick($index)" class="not-selected" ng-class="{'selected' : selectedItem === $index}">
+        #{{$index}} {{cv.name + ' ' + cv.surname}}
+      </div>
+    </div>
+
+    <div class="container2">
+      <div class="ui toggle checkbox" ng-click="addCVButton()">
+        <input type="checkbox" name="public">
+        <label>Add CV</label>
+      </div>
+      <div ng-show="expandOrNot">
+        <div>
+          <b>Candidate #{{$index}}</b> {{expandedCV[cvItem].name + ' ' + expandedCV[cvItem].surname}}
+          <br>
+          <b>Age and sex</b>: {{expandedCV[cvItem].age + ' ' + expandedCV[cvItem].sex}}
+        </div>
+
+        <div>
+          <b>Phone</b>:
+          <span ng-repeat="phoneObj in expandedCV[cvItem].phones track by phoneObj.phoneID">
+            {{phoneObj.phone + ($index !== expandedCV[cvItem].phones.length-1 ? ', ' : '.') }}
+          </span>
+        </div>
+
+        <div>
+          <b>Address</b>: {{expandedCV[cvItem].address}}
+        </div>
+
+        <br/>
+        <div>
+          <b>Education:</b>
+          <span ng-repeat="institution in expandedCV[cvItem].education track by institution.educationID">
+            <br/>
+            <b>#{{$index + 1}}</b>
+            <br/>{{institution.degree + ' degree @ ' + ' ' + institution.name + institution.type}}
+          </span>
+        </div>
+
+        <br/>
+        <div>
+          <b>Experience:</b>
+          <span ng-repeat="workplace in expandedCV[cvItem].experience track by workplace.workplaceID">
+            <br/>
+            <b>#{{$index + 1}}</b>
+            <br/> {{workplace.time + (workplace.time
+            <=1 ? ' year' : ' years') + ' @ ' + workplace.name}} <br/> Department: {{workplace.department}}
+            <br/> Industry: {{workplace.industry}}
+          </span>
+        </div>
+      </div>
+
+
+
+
+      <form name="addForm" ng-submit="submitCV(currentCV)" class="css-form" novalidate>
+        <div ng-show="showForm()">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" name="name" ng-model="currentCV.name" required>
+          </div>
+
+          <div>
+            <label for="surname">Surame</label>
+            <input type="text" name="surname" ng-model="currentCV.surname" required>
+          </div>
+
+          <div>
+            <label for="age">Age</label>
+            <input type="text" name="age" ng-model="currentCV.age" required>
+          </div>
+
+          <div>
+            <label for="sex">Sex</label>
+            <select ng-options="sex for sex in currentCV.sexes" name="sex" ng-model="currentCV.sex" required>
+            </select>
+          </div>
+
+          <div>
+            <label for="address">Address</label>
+            <input type="text" name="address" ng-model="currentCV.address">
+          </div>
+
+          <div>
+            <button type="button" ng-click="addPhoneInput()">+</button>
+            <button type="button" ng-click="removePhoneInput()">-</button>
+
+            <div ng-repeat="phoneObj in currentCV.phones track by $index">
+              <label for="phone">Phone #{{$index + 1}}</label>
+              <input type="text" name="phone" ng-model="phoneObj.phone">
+            </div>
+          </div>
+
+          <button type="button" ng-click="addEducationInput()">+</button>
+          <button type="button" ng-click="removeEducationInput()">-</button>
+          <div ng-repeat="institution in currentCV.institutions track by $index">
+            Education #{{$index + 1}}
+            <div>
+              <label for="educationType">Type of institution</label>
+              <input type="text" name="educationType" ng-model="institution.type">
+            </div>
+            <div>
+              <label for="educationName">Name of institution</label>
+              <input type="text" name="educationName" ng-model="institution.name">
+            </div>
+            <div>
+              <label for="degree">Type of institution</label>
+              <input type="text" name="degree" ng-model="institution.degree">
+            </div>
+          </div>
+
+          <button type="button" ng-click="addWorkplaceInput()">+</button>
+          <button type="button" ng-click="removeWorkplaceInput()">-</button>
+          <div ng-repeat="workplace in currentCV.workplaces track by $index">
+            Experience #{{$index + 1}}
+            <div>
+              <label for="workplace">Workplace name</label>
+              <input type="text" name="workplace" ng-model="workplace.name">
+            </div>
+            <div>
+              <label for="department">Department</label>
+              <input type="text" name="department" ng-model="workplace.department">
+            </div>
+            <div>
+              <label for="industry">Industry</label>
+              <input type="text" name="industry" ng-model="workplace.industry">
+            </div>
+            <div>
+              <label for="time">Time</label>
+              <input type="text" name="time" ng-model="workplace.time">
+            </div>
+          </div>
+          <button type="submit" ng-disabled="addForm.$invalid">Submit CV</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>
