@@ -1,0 +1,45 @@
+<div ng-click="addCVButton()">
+    <button class="ui button">
+        Add CV
+    </button>
+</div>
+<div ng-show="expandOrNot">
+    <div>
+        <b>Candidate #{{$index}}</b> {{expandedCV[cvItem].name + ' ' + expandedCV[cvItem].surname}}
+        <br>
+        <b>Age and sex</b>: {{expandedCV[cvItem].age + ' ' + expandedCV[cvItem].sex}}
+    </div>
+
+    <div>
+        <b>Phone</b>:
+        <span ng-repeat="phoneObj in expandedCV[cvItem].phones track by phoneObj.phoneID">
+            {{phoneObj.phone + ($index !== expandedCV[cvItem].phones.length-1 ? ', ' : '.') }}
+        </span>
+    </div>
+
+    <div>
+        <b>Address</b>: {{expandedCV[cvItem].address}}
+    </div>
+
+    <br/>
+    <div>
+        <b>Education:</b>
+        <span ng-repeat="institution in expandedCV[cvItem].education track by institution.educationID">
+            <br/>
+            <b>#{{$index + 1}}</b>
+            <br/>{{institution.degree + ' degree @ ' + ' ' + institution.name + institution.type}}
+        </span>
+    </div>
+
+    <br/>
+    <div>
+        <b>Experience:</b>
+        <span ng-repeat="workplace in expandedCV[cvItem].experience track by workplace.workplaceID">
+            <br/>
+            <b>#{{$index + 1}}</b>
+            <br/> {{workplace.time + (workplace.time
+            <=1 ? ' year' : ' years') + ' @ ' + workplace.name}} <br/> Department: {{workplace.department}}
+            <br/> Industry: {{workplace.industry}}
+        </span>
+    </div>
+</div>

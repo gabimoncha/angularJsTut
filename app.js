@@ -118,7 +118,6 @@ app.controller('cvListCtrl', function ($scope) {
 });
 
 
-
 var cVs = [
     {
         candidateID: 0,
